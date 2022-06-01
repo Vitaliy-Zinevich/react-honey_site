@@ -9,6 +9,7 @@ function Header() {
               <p>самый вкусный и полезный мёд</p>
             </div>
           </div>
+          <a className="header__tel" href="tel:+79788861235">+7978 886 12 35</a>
           <div className="header__cart">
             <a href="/cart.html" className="button button--cart">
               <span>520 ₽</span>

@@ -1,36 +1,24 @@
-import React, { useState } from 'react';
-
-
-function HoneyBlock({imageUrl, title, price}) {
-  const [honeyCount, setHoneyCount] = useState(0);
-
-  const onClickButton = () => {
-    setHoneyCount(honeyCount + 1);
-  }
-
+function HoneyBlock({imageUrl, title, price, sizes}) {
+  
 
     return (
         <div className="honey-block">
               <img
                 className="honey-block__image"
                 src={imageUrl}
-                alt="Pizza"
+                alt="Honey"
               />
               <h4 className="honey-block__title">{title} </h4>
               <div className="honey-block__selector">
                 <ul>
-                  <li className="active">тонкое</li>
-                  <li>традиционное</li>
-                </ul>
-                <ul>
-                  <li className="active">26 см.</li>
-                  <li>30 см.</li>
-                  <li>40 см.</li>
+                  {sizes.map((size) => (
+                    <li>{size} л.</li>
+                  ))}
                 </ul>
               </div>
               <div className="honey-block__bottom">
                 <div className="honey-block__price">{price} ₽</div>
-                <button onClick={onClickButton} className="button button--outline button--add">
+                <button  className="button button--outline button--add">
                   <svg
                     width="12"
                     height="12"
@@ -43,7 +31,7 @@ function HoneyBlock({imageUrl, title, price}) {
                     />
                   </svg>
                   <span>Добавить</span>
-                  <i>{honeyCount}</i>
+                  <i>0</i>
                 </button>
               </div>
             </div>
