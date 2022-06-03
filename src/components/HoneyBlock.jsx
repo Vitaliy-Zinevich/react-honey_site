@@ -1,4 +1,8 @@
+import React, {useState} from "react";
+
 function HoneyBlock({imageUrl, title, price, sizes}) {
+
+  const [activeSize, setActiveSize] = useState(0);
   
 
     return (
@@ -11,8 +15,8 @@ function HoneyBlock({imageUrl, title, price, sizes}) {
               <h4 className="honey-block__title">{title} </h4>
               <div className="honey-block__selector">
                 <ul>
-                  {sizes.map((size) => (
-                    <li>{size} л.</li>
+                  {sizes.map((size, i) => (
+                    <li key={i} onClick={() => setActiveSize(i)} className={activeSize == i ? 'active' : ''}>{size} л.</li>
                   ))}
                 </ul>
               </div>
