@@ -2,8 +2,9 @@ import React, {useState} from "react";
 
 function Sort() {
     const [open, setOpen] = useState(false);
-    const [filter, setFilter] = useState(false);
+    const [filter, setFilter] = useState(0);
     const list = ['популярность', 'цене', 'алфавиту'];
+ 
 
     const onClickList = (i) => {
       setFilter(i);

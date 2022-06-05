@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom";
+
 function Header() {
     return (
       <div className="header">
         <div className="container">
+          <Link to="/">
           <div className="header__logo">
             <img width="40" src="https://images.unsplash.com/photo-1572586292360-a1be2b20f3ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OTl8fGhvbmV5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Honey logo" />
             <div>
@@ -9,9 +12,10 @@ function Header() {
               <p>самый вкусный и полезный мёд</p>
             </div>
           </div>
+          </Link>
           <a className="header__tel" href="tel:+79788861235">+7978 886 12 35</a>
           <div className="header__cart">
-            <a href="/cart.html" className="button button--cart">
+            <Link to="/cart" className="button button--cart">
               <span>520 ₽</span>
               <div className="button__delimiter"></div>
               <svg
@@ -43,7 +47,7 @@ function Header() {
                 />
               </svg>
               <span>3</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
