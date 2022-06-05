@@ -7,7 +7,7 @@ function Categories() {
       setActiveIndex(index);
     }
     
-    const categories = ['Все', 'Мёд', 'Соты', 'Оплата', 'Доставка'];
+    const categories = ['Все', 'Мёд', 'Соты'];
 
     return (
       <div className="categories">

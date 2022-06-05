@@ -6,7 +6,8 @@ function HoneyBlock({imageUrl, title, price, sizes}) {
   
 
     return (
-        <div className="honey-block">
+        <div className="honey-block-wrapper">
+          <div className="honey-block">
               <img
                 className="honey-block__image"
                 src={imageUrl}
@@ -39,6 +40,7 @@ function HoneyBlock({imageUrl, title, price, sizes}) {
                 </button>
               </div>
             </div>
+        </div>
     )
 }
 
