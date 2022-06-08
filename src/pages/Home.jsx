@@ -3,11 +3,16 @@ import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import HoneyBlock from '../components/HoneyBlock';
 import Skeleton from '../components/Skeleton';
+import Pagination from "../components/Pagination";
+import { SearchContext } from "../App";
 
-const Home = () => {
+
+const Home = ( ) => {
+    const {searchValue} = React.useContext(SearchContext);
     const [honey, setHoney] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
     const [categoryId, setCategoryId] = React.useState(0);
+    const [currentPage, setCurrentPage] = React.useState(1);
     const [sort, setSort] = React.useState({
       name: 'популярности',
       sortProperty: 'rating',
@@ -20,8 +25,9 @@ const Home = () => {
       const sortBy = sort.sortProperty.replace('-', '');
       const category = categoryId > 0 ? `category=${categoryId}` : '';
       
+      
      fetch(
-       `https://629b609c656cea05fc383281.mockapi.io/honey?${category}&sortBy=${sortBy}&order=${order}`
+       `https://629b609c656cea05fc383281.mockapi.io/honey?${category}&page=${currentPage}&sortBy=${sortBy}&order=${order}`
        )
       .then((res) => {
         return res.json();
@@ -31,21 +37,31 @@ const Home = () => {
         setIsLoading(false);
       });
       window.scrollTo(0, 0);
-     }, [categoryId, sort]);
+     }, [categoryId, sort, currentPage]);
+
+     
+     const price = honey
+     .filter((obj) => {
+       if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
+         return true;
+       }
+         return false;
+     })
+     .map((obj) => <HoneyBlock key={obj.id} {...obj}/>);
+     const skeletons = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
 
 
     return (
         <div className="container">
         <div className="content__top">
-            <Categories value = {categoryId} onClickCategory={(id) => setCategoryId(id)} />
+            <Categories value = {categoryId} onClickCategory={(i) => setCategoryId(i)} />
             <Sort value = {sort} onChangeSort={(id) => setSort(id)}/>
           </div>
           <h2 className="content__title">Список всех продуктов</h2>
           <div className="content__items">
-            {isLoading
-              ? [...new Array(4)].map((_, index) => <Skeleton key={index} />)
-              : honey.map((obj) => <HoneyBlock key={obj.id} {...obj} />)}
+            {isLoading ? skeletons : price }
           </div>
+          <Pagination onChangePage={number => setCurrentPage(number)}  />
         </div>
     )
 }

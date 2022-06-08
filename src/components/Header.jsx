@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import Search from "./Search";
 
-function Header() {
+function Header( ) {
     return (
       <div className="header">
         <div className="container">
@@ -13,6 +14,7 @@ function Header() {
             </div>
           </div>
           </Link>
+          <Search />
           <a className="header__tel" href="tel:+79788861235">+7978 886 12 35</a>
           <div className="header__cart">
             <Link to="/cart" className="button button--cart">

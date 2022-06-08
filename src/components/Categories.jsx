@@ -8,7 +8,7 @@ function Categories( {value, onClickCategory}) {
     return (
       <div className="categories">
         <ul>
-          {categories.map((categoryName, id) => <li key={id} onClick={() => onClickCategory(id)} className={value == id ? 'active' : ''}>{categoryName}</li>)}
+          {categories.map((categoryName, i) => <li key={i} onClick={() => onClickCategory(i)} className={value == i ? 'active' : ''}>{categoryName}</li>)}
         </ul>
       </div>
     );
