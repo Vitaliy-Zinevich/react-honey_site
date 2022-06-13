@@ -1,28 +1,36 @@
 import React from "react"
+import { useSelector, useDispatch } from "react-redux/es/exports";
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import HoneyBlock from '../components/HoneyBlock';
 import Skeleton from '../components/Skeleton';
 import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
+import { setCategoryId } from "../redux/slices/filterSlice";
 
 
 const Home = ( ) => {
+    const dispatch = useDispatch();
+    const{ categoryId, sort} = useSelector((state) => state.filter);
+    const sortType = sort.sortProperty;
+
+   
+
     const {searchValue} = React.useContext(SearchContext);
     const [honey, setHoney] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
-    const [categoryId, setCategoryId] = React.useState(0);
     const [currentPage, setCurrentPage] = React.useState(1);
-    const [sort, setSort] = React.useState({
-      name: 'популярности',
-      sortProperty: 'rating',
-    });
+    
+
+    const onChangeCategory = (id) => {
+      dispatch(setCategoryId(id));
+    }
 
     React.useEffect(() => {
       setIsLoading(true);
 
-      const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
-      const sortBy = sort.sortProperty.replace('-', '');
+      const order = sortType.includes('-') ? 'asc' : 'desc';
+      const sortBy = sortType.replace('-', '');
       const category = categoryId > 0 ? `category=${categoryId}` : '';
       
       
@@ -37,7 +45,7 @@ const Home = ( ) => {
         setIsLoading(false);
       });
       window.scrollTo(0, 0);
-     }, [categoryId, sort, currentPage]);
+     }, [categoryId, sortType, currentPage]);
 
      
      const price = honey
@@ -54,8 +62,8 @@ const Home = ( ) => {
     return (
         <div className="container">
         <div className="content__top">
-            <Categories value = {categoryId} onClickCategory={(i) => setCategoryId(i)} />
-            <Sort value = {sort} onChangeSort={(id) => setSort(id)}/>
+            <Categories value = {categoryId} onClickCategory={onChangeCategory} />
+            <Sort />
           </div>
           <h2 className="content__title">Список всех продуктов</h2>
           <div className="content__items">
