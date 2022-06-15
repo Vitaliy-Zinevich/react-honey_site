@@ -1,4 +1,5 @@
 import React from "react"
+import axios from "axios";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -6,12 +7,12 @@ import HoneyBlock from '../components/HoneyBlock';
 import Skeleton from '../components/Skeleton';
 import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
-import { setCategoryId } from "../redux/slices/filterSlice";
+import { setCategoryId, setCurrentCount } from "../redux/slices/filterSlice";
 
 
 const Home = ( ) => {
     const dispatch = useDispatch();
-    const{ categoryId, sort} = useSelector((state) => state.filter);
+    const{ categoryId, sort, currentPage} = useSelector((state) => state.filter);
     const sortType = sort.sortProperty;
 
    
@@ -19,11 +20,15 @@ const Home = ( ) => {
     const {searchValue} = React.useContext(SearchContext);
     const [honey, setHoney] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
-    const [currentPage, setCurrentPage] = React.useState(1);
+    
     
 
     const onChangeCategory = (id) => {
       dispatch(setCategoryId(id));
+    }
+
+    const onChangePage = (number) => {
+      dispatch(setCurrentCount(number));
     }
 
     React.useEffect(() => {
@@ -32,20 +37,19 @@ const Home = ( ) => {
       const order = sortType.includes('-') ? 'asc' : 'desc';
       const sortBy = sortType.replace('-', '');
       const category = categoryId > 0 ? `category=${categoryId}` : '';
+      const search = searchValue ? `search=${searchValue}` : '';
       
       
-     fetch(
-       `https://629b609c656cea05fc383281.mockapi.io/honey?${category}&page=${currentPage}&sortBy=${sortBy}&order=${order}`
-       )
+    
+    axios.get(
+      `https://629b609c656cea05fc383281.mockapi.io/honey?${category}&page=${currentPage}&sortBy=${sortBy}&order=${order}&search=${search}`
+      )
       .then((res) => {
-        return res.json();
-      })
-      .then((arr) => {
-        setHoney(arr);
+        setHoney(res.data);
         setIsLoading(false);
       });
       window.scrollTo(0, 0);
-     }, [categoryId, sortType, currentPage]);
+     }, [categoryId, sortType, currentPage, searchValue]);
 
      
      const price = honey
@@ -69,7 +73,7 @@ const Home = ( ) => {
           <div className="content__items">
             {isLoading ? skeletons : price }
           </div>
-          <Pagination onChangePage={number => setCurrentPage(number)}  />
+          <Pagination value={currentPage} onChangePage={onChangePage}  />
         </div>
     )
 }
