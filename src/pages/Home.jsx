@@ -1,5 +1,4 @@
 import React from "react"
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -8,21 +7,17 @@ import Skeleton from '../components/Skeleton';
 import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
 import { setCategoryId, setCurrentCount } from "../redux/slices/filterSlice";
+import {  fetchHoney  } from "../redux/slices/honeySlice";
 
 
 const Home = ( ) => {
     const dispatch = useDispatch();
+    const {honey, status} = useSelector((state) => state.honey);
     const{ categoryId, sort, currentPage} = useSelector((state) => state.filter);
+    
     const sortType = sort.sortProperty;
-
-   
-
     const {searchValue} = React.useContext(SearchContext);
-    const [honey, setHoney] = React.useState([]);
-    const [isLoading, setIsLoading] = React.useState(true);
     
-    
-
     const onChangeCategory = (id) => {
       dispatch(setCategoryId(id));
     }
@@ -31,25 +26,26 @@ const Home = ( ) => {
       dispatch(setCurrentCount(number));
     }
 
-    React.useEffect(() => {
-      setIsLoading(true);
-
+    const Loading = async () => {
       const order = sortType.includes('-') ? 'asc' : 'desc';
       const sortBy = sortType.replace('-', '');
       const category = categoryId > 0 ? `category=${categoryId}` : '';
       const search = searchValue ? `search=${searchValue}` : '';
       
-      
     
-    axios.get(
-      `https://629b609c656cea05fc383281.mockapi.io/honey?${category}&page=${currentPage}&sortBy=${sortBy}&order=${order}&search=${search}`
-      )
-      .then((res) => {
-        setHoney(res.data);
-        setIsLoading(false);
-      });
-      window.scrollTo(0, 0);
-     }, [categoryId, sortType, currentPage, searchValue]);
+        dispatch
+        (fetchHoney({
+          order,  sortBy, category,  search, currentPage,
+        }),
+      );
+      
+  
+      window.scrollTo(0, 0)};
+    
+    
+     React.useEffect( () => {
+        Loading(); 
+      }, [categoryId, sortType, currentPage, searchValue]);
 
      
      const price = honey
@@ -70,9 +66,19 @@ const Home = ( ) => {
             <Sort />
           </div>
           <h2 className="content__title">Список всех продуктов</h2>
-          <div className="content__items">
-            {isLoading ? skeletons : price }
-          </div>
+          { status === 'error' ? (
+            <div class="cart cart--empty">
+            <h2>Произошла ошибка<icon>😕</icon></h2>
+            <p>
+              К сожалению, не удалось получить данные o товаре.<br />
+              Попробуйте повторить попытку позже.
+            </p>
+            </div>
+            ) : (
+              <div className="content__items">{status == 'loading' ? skeletons : price } </div>
+            )
+          }
+          
           <Pagination value={currentPage} onChangePage={onChangePage}  />
         </div>
     )
