@@ -13,10 +13,10 @@ import {  fetchHoney  } from "../redux/slices/honeySlice";
 const Home = ( ) => {
     const dispatch = useDispatch();
     const {honey, status} = useSelector((state) => state.honey);
-    const{ categoryId, sort, currentPage} = useSelector((state) => state.filter);
+    const{ categoryId, sort, currentPage, searchValue} = useSelector((state) => state.filter);
     
     const sortType = sort.sortProperty;
-    const {searchValue} = React.useContext(SearchContext);
+    // const {searchValue} = React.useContext(SearchContext);
     
     const onChangeCategory = (id) => {
       dispatch(setCategoryId(id));
