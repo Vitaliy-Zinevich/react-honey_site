@@ -31,7 +31,7 @@ const Search = () => {
          updateSearchValue(event.target.value);
      };
 
-     console.log(updateSearchValue);
+     console.log(value);
 
 
       return (

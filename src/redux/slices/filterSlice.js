@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  searchValue: '',
   categoryId: 0,
   currentPage: 1,
-  searchValue: '',
   sort: {
     name: 'популярности',
     sortProperty: 'rating',

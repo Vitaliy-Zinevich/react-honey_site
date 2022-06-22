@@ -5,7 +5,6 @@ import Sort from '../components/Sort';
 import HoneyBlock from '../components/HoneyBlock';
 import Skeleton from '../components/Skeleton';
 import Pagination from "../components/Pagination";
-import { SearchContext } from "../App";
 import { setCategoryId, setCurrentCount } from "../redux/slices/filterSlice";
 import {  fetchHoney  } from "../redux/slices/honeySlice";
 
@@ -16,7 +15,6 @@ const Home = ( ) => {
     const{ categoryId, sort, currentPage, searchValue} = useSelector((state) => state.filter);
     
     const sortType = sort.sortProperty;
-    // const {searchValue} = React.useContext(SearchContext);
     
     const onChangeCategory = (id) => {
       dispatch(setCategoryId(id));
@@ -30,7 +28,8 @@ const Home = ( ) => {
       const order = sortType.includes('-') ? 'asc' : 'desc';
       const sortBy = sortType.replace('-', '');
       const category = categoryId > 0 ? `category=${categoryId}` : '';
-      const search = searchValue ? `search=${searchValue}` : '';
+      const search = searchValue;
+     
       
     
         dispatch
