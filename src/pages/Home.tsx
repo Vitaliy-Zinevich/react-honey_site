@@ -7,20 +7,22 @@ import Skeleton from '../components/Skeleton';
 import Pagination from "../components/Pagination";
 import { setCategoryId, setCurrentCount } from "../redux/slices/filterSlice";
 import {  fetchHoney  } from "../redux/slices/honeySlice";
+import { selectHoneyData } from "./selectHoneyData";
+import { selectHoneyFilter } from "./selectHoneyData";
 
 
-const Home = ( ) => {
+const Home: React.FC = ( ) => {
     const dispatch = useDispatch();
-    const {honey, status} = useSelector((state) => state.honey);
-    const{ categoryId, sort, currentPage, searchValue} = useSelector((state) => state.filter);
+    const {honey, status} = useSelector(selectHoneyData);
+    const{ categoryId, sort, currentPage, searchValue} = useSelector(selectHoneyFilter);
     
     const sortType = sort.sortProperty;
     
-    const onChangeCategory = (id) => {
+    const onChangeCategory = (id: number) => {
       dispatch(setCategoryId(id));
     }
 
-    const onChangePage = (number) => {
+    const onChangePage = (number: number) => {
       dispatch(setCurrentCount(number));
     }
 
@@ -33,7 +35,9 @@ const Home = ( ) => {
       
     
         dispatch
-        (fetchHoney({
+        (
+          // @ts-ignore
+          fetchHoney({
           order,  sortBy, category,  search, currentPage,
         }),
       );
@@ -48,13 +52,13 @@ const Home = ( ) => {
 
      
      const price = honey
-     .filter((obj) => {
+     .filter((obj: any) => {
        if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
          return true;
        }
          return false;
      })
-     .map((obj) => <HoneyBlock key={obj.id} {...obj}/>);
+     .map((obj: any) => <HoneyBlock key={obj.id} {...obj}/>);
      const skeletons = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
 
 
@@ -66,8 +70,8 @@ const Home = ( ) => {
           </div>
           <h2 className="content__title">Список всех продуктов</h2>
           { status === 'error' ? (
-            <div class="cart cart--empty">
-            <h2>Произошла ошибка<icon>😕</icon></h2>
+            <div className="cart cart--empty">
+            <h2>Произошла ошибка<span>😕</span></h2>
             <p>
               К сожалению, не удалось получить данные o товаре.<br />
               Попробуйте повторить попытку позже.
@@ -78,7 +82,7 @@ const Home = ( ) => {
             )
           }
           
-          <Pagination value={currentPage} onChangePage={onChangePage}  />
+          <Pagination currentPage={currentPage} onChangePage={onChangePage}  />
         </div>
     )
 }

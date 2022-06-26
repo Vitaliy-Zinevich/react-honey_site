@@ -29,6 +29,8 @@ const filter = createSlice({
   },
 });
 
+
+
 export const { setCategoryId, setSort, setCurrentCount, setSearchValue } = filter.actions;
 
 export default filter.reducer;

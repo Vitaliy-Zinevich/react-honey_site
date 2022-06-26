@@ -1,11 +1,15 @@
 import React, {useState} from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
+import { selectCartItemById } from "../redux/slices/selectCart";
 
 import { addItem } from '../redux/slices/cartSlice'
 
-function HoneyBlock({id, imageUrl, title, price, sizes}) {
+
+type HoneyBlockProps = {id:string; imageUrl:string; title:string; price:number; sizes:number[];};
+
+const HoneyBlock: React.FC< HoneyBlockProps> = ({id, imageUrl, title, price, sizes}) => {
   const dispatch = useDispatch();
-  const cartItem = useSelector(state => state.cart.items.find(obj => obj.id == id));
+  const cartItem = useSelector(selectCartItemById);
   const [activeSize, setActiveSize] = useState(0);
 
   const addedCount = cartItem ? cartItem.count : 0;
