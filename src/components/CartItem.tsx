@@ -18,6 +18,11 @@ import { useDispatch } from "react-redux/es/exports";
         dispatch(
           addItem({
             id,
+            title,
+            price,
+            size,
+            count,
+            imageUrl,
           }),
         );
     };

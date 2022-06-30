@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
-import { setSort } from "../redux/slices/filterSlice";
+import { setSort, SortPropertyEnum } from "../redux/slices/filterSlice";
 import { selectSortItemById } from "../redux/slices/selectSort";
 
 
 
-type SortItem = {
+export type SortItem = {
   name: string;
-  sortProperty: string;
+  sortProperty:  SortPropertyEnum;
 };
 
 
@@ -23,12 +23,12 @@ const Sort = () => {
 
     
     const list: SortItem[] = [
-      {name: 'популярность (DESK)', sortProperty: 'rating'} , 
-      {name: 'популярность (ASC)', sortProperty: '-rating'} ,
-      {name: 'цене (DESK)', sortProperty: 'price'},
-      {name: 'цене (ASC)', sortProperty: '-price'}, 
-      {name: 'алфавиту (DESK)', sortProperty: 'title'},
-      {name: 'алфавиту (ASC)', sortProperty: '-title'},
+      {name: 'популярность (DESK)', sortProperty: SortPropertyEnum.RATING_DESC} , 
+      {name: 'популярность (ASC)', sortProperty: SortPropertyEnum.RATING_ASC} ,
+      {name: 'цене (DESK)', sortProperty: SortPropertyEnum.PRICE_DESC},
+      {name: 'цене (ASC)', sortProperty: SortPropertyEnum.PRICE_ASC}, 
+      {name: 'алфавиту (DESK)', sortProperty: SortPropertyEnum.TITLE_DESC},
+      {name: 'алфавиту (ASC)', sortProperty: SortPropertyEnum.TITLE_ASC},
     ];
  
 

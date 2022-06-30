@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { selectCartItemById } from "../redux/slices/selectCart";
 
-import { addItem } from '../redux/slices/cartSlice'
+import { addItem, CartItem } from '../redux/slices/cartSlice'
 
 
 type HoneyBlockProps = {id:string; imageUrl:string; title:string; price:number; sizes:number[];};
@@ -16,12 +16,13 @@ const HoneyBlock: React.FC< HoneyBlockProps> = ({id, imageUrl, title, price, siz
   
   
   const onClickAdd = () => {
-     const item = {
+     const item: CartItem = {
       id,
       imageUrl,
       title,
       price,
       size: sizes[activeSize],
+      count: 0,
      };
      dispatch(addItem(item));
   };

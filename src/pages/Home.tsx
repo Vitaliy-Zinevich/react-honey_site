@@ -1,5 +1,5 @@
 import React from "react"
-import { useSelector, useDispatch } from "react-redux/es/exports";
+import { useSelector } from "react-redux/es/exports";
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import HoneyBlock from '../components/HoneyBlock';
@@ -9,10 +9,11 @@ import { setCategoryId, setCurrentCount } from "../redux/slices/filterSlice";
 import {  fetchHoney  } from "../redux/slices/honeySlice";
 import { selectHoneyData } from "./selectHoneyData";
 import { selectHoneyFilter } from "./selectHoneyData";
+import { useAppDispatch } from "../redux/store";
 
 
 const Home: React.FC = ( ) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const {honey, status} = useSelector(selectHoneyData);
     const{ categoryId, sort, currentPage, searchValue} = useSelector(selectHoneyFilter);
     
@@ -22,8 +23,8 @@ const Home: React.FC = ( ) => {
       dispatch(setCategoryId(id));
     }
 
-    const onChangePage = (number: number) => {
-      dispatch(setCurrentCount(number));
+    const onChangePage = (page: number) => {
+      dispatch(setCurrentCount(page));
     }
 
     const Loading = async () => {
@@ -35,8 +36,7 @@ const Home: React.FC = ( ) => {
       
     
         dispatch
-        (
-          // @ts-ignore
+        ( 
           fetchHoney({
           order,  sortBy, category,  search, currentPage,
         }),
