@@ -12,14 +12,14 @@
         line-height: 18px;
         height: 42px;
         padding: 10px;
-        border: 1px solid #fe5f1e;
+        border: 1px solid #20B2AA;
         border-radius: 30px;
         margin-right: 5px;
         cursor: pointer;
 
 
         &:hover {
-            background-color: #fe5f1e;;
+            background-color: #20B2AA;
             color: #fff;
         }
 
@@ -29,7 +29,7 @@
     :global {
         .selected {
             a {
-                background-color: #fe5f1e;;
+                background-color: #20B2AA;;
                 color: #fff;
             }
         }

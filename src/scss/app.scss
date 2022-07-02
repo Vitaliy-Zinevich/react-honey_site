@@ -11,7 +11,7 @@ body {
   width: calc(100vw - 100px);
   height: 100%;
   background-color: #fff;
-  margin: 50px auto;
+  margin: 10px auto;
   border-radius: 10px;
   max-width: 1400px;
 }
@@ -89,7 +89,7 @@ body {
       top: -2px;
       width: 30px;
       height: 30px;
-      margin-right: 10px;
+      margin-right: 10px;     
       path {
         stroke: $black;
         stroke-width: 1.9;
@@ -180,6 +180,24 @@ body {
         svg {
           path:first-of-type {
             display: none;
+          }
+        }
+
+        &-disabled {
+          opacity: 0.4;
+          border-color: rgb(153 150 149);
+
+
+          &:active {
+            transform: none;
+          }
+
+          &:hover {
+            background-color: transparent;
+          }
+
+          svg path {
+            fill:rgb(153 150 149);
           }
         }
       }

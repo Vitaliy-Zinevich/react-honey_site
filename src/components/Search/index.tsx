@@ -31,8 +31,6 @@ const Search: React.FC = () => {
          updateSearchValue(event.target.value);
      };
 
-     console.log(value);
-
 
       return (
            <div>
