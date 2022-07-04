@@ -13,7 +13,8 @@ const HoneyBlock: React.FC< HoneyBlockProps> = ({id, imageUrl, title, price, siz
   const [activeSize, setActiveSize] = useState(0);
 
   const addedCount = cartItem ? cartItem.count : 0;
-  
+   
+  price = price * (activeSize + 1);
   
   const onClickAdd = () => {
      const item: CartItem = {
@@ -27,6 +28,11 @@ const HoneyBlock: React.FC< HoneyBlockProps> = ({id, imageUrl, title, price, siz
      dispatch(addItem(item));
   };
 
+
+  let totalPrice =  price * Number(sizes);
+
+  console.log(totalPrice);
+
     return (
         <div className="honey-block-wrapper">
           <div className="honey-block">
@@ -39,12 +45,12 @@ const HoneyBlock: React.FC< HoneyBlockProps> = ({id, imageUrl, title, price, siz
               <div className="honey-block__selector">
                 <ul>
                   {sizes.map((size, i) => (
-                    <li key={i} onClick={() => setActiveSize(i)} className={activeSize == i ? 'active' : ''}>{size} л.</li>
+                    <li key={i} onClick={() => setActiveSize(i)}  className={activeSize == i ? 'active' : ''}>{size} л.</li>
                   ))}
                 </ul>
               </div>
               <div className="honey-block__bottom">
-                <div className="honey-block__price">{price} ₽</div>
+                <div className="honey-block__price">{price } ₽</div>
                 <button onClick={onClickAdd}  className="button button--outline button--add">
                   <span>В корзину</span>
                   {addedCount > 0 && <i>{addedCount}</i>}
